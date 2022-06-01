@@ -1,0 +1,29 @@
+server:
+  port: 8080
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    preferIpAddress: true
+    nonSecurePort: 8080
+    securePortEnabled: false
+
+spring:
+  application:
+    name: api-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: usuarios-service
+          uri: lb://usuarios-service
+          predicates:
+            - Path=/usuario/**
+        - id: produto-service
+          uri: lb://produto-service
+          predicates:
+            - Path=/produto/**
+        - id: vendas-service
+          uri: lb://vendas-service
+          predicates:
+            - Path=/vendas/**
